@@ -1,0 +1,196 @@
+<?php
+// Database connection details
+$host = "localhost";
+$user = "root";
+$password = "basu2004";
+$db = "admin";
+
+// Create connection
+$conn = new mysqli($host, $user, $password, $db);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Query to fetch student placement records
+$sql = "SELECT student_name, course, student_email, student_image, company_name, job_role, salary_package, placement_year FROM student_placement_record LIMIT 5"; // Adjust the query based on your table structure
+$result = $conn->query($sql);
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placement Record</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="Images/favicon.png" alt="MMDU Logo" id="logo">
+            <div class="university-info">
+                <h1>MAHARISHI MARKANDESHWAR</h1>
+                <p>(DEEMED TO BE UNIVERSITY)</p>
+                <p>Mullana-Ambala, Haryana</p>
+                <p>(Accredited by NAAC with Grade 'A++')</p>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#Student">Student</a></li>
+                <li><a href="#companies">Company</a></li>
+                <li><a href="http://localhost/Placement%20Record%20Project/Placement%20Record%20Project/Admin-Pannel/login.php">Admin</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    
+        
+        <section class="hero">
+            <video src=""></video>
+            <h2>Placement Record</h2>
+            <p>Trace the Footsteps of Our Achievers</p>
+            <p>We at MM(DU) strongly believe that each and every MMDU student would spread his/her golden dust with the progressive learning attitude that they have been sculptured with and would come out victoriously with flying colors in each field of their life.</p>
+            <a href="#" class="cta-button">Let's go...</a>
+        </section>
+    </main>
+    <section id="companies">
+        <div class="container">
+            <h1 id="comp">Companies</h1>
+            <div class="box-container">
+                <div class="box">Infosys Ltd</div>
+                <div class="box">TCS</div>
+                <div class="box">IBM</div>
+                <div class="box">HCL</div>
+                <div class="box">Wipro Technologies Ltd.</div>
+                <div class="box">LAVA International</div>
+                <div class="box">Cognizant</div>
+                <div class="box">Accenture</div>
+                <div class="box">Tech Mahindra</div>
+                <div class="box">Capagimini</div>
+                <div class="box">JP Morgan</div>
+                <div class="box">Vivo</div>
+                <div class="box">Bosch</div>
+                <div class="box">Infogain</div>
+                <div class="box">eClerx</div>
+                <div class="box">Airtel</div>
+                <div class="box">VI</div>
+                <div class="box">Samsung</div>
+                <div class="box">Byju's</div>
+                <div class="box">Informatica</div>
+                <div class="box">Pepsico</div>
+            </div>
+        </div>
+    </section>
+
+        <section id="Student">
+            <div class="top-achievers">
+                <h2>Top Achievers</h2>
+                <div class="achievers-container">
+                <div class="achiever">
+                    <img src="Images/simg.jpg" alt="Anshul Soni">
+                    <div class="name-tag">
+                        <p>Anshul Soni</p>
+                        <p>Microsoft - Software Engineer</p>
+                    </div>
+                </div>
+                <div class="achiever">
+                    <img src="Images/simg.jpg" alt="Anshul Soni">
+                    <div class="name-tag">
+                        <p>Anshul Soni</p>
+                        <p>Microsoft - Software Engineer</p>
+                    </div>
+                </div>
+                <div class="achiever">
+                    <img src="Images/simg.jpg" alt="Anshul Soni">
+                    <div class="name-tag">
+                        <p>Anshul Soni</p>
+                        <p>Microsoft - Software Engineer</p>
+                    </div>
+                </div>
+                <div class="achiever">
+                    <img src="Images/simg.jpg" alt="Anshul Soni">
+                    <div class="name-tag">
+                        <p>Anshul Soni</p>
+                        <p>Microsoft - Software Engineer</p>
+                    </div>
+                </div>
+                <div class="achiever">
+                    <img src="Images/simg.jpg" alt="Anshul Soni">
+                    <div class="name-tag">
+                        <p>Anshul Soni</p>
+                        <p>Microsoft - Software Engineer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+                <div class="achievers-container">
+                
+                    <?php if ($result->num_rows > 0) : ?>
+                        <?php while ($row = $result->fetch_assoc()) : ?>
+                            <div class="achiever">
+                                <img src="Images/<?php echo htmlspecialchars($row['student_image']); ?>" alt="<?php echo htmlspecialchars($row['student_name']); ?>">
+                                <div class="name-tag">
+                                    <p><?php echo htmlspecialchars($row['student_name']); ?></p>
+                                    <p><?php echo htmlspecialchars($row['job_role']); ?> at <?php echo htmlspecialchars($row['company_name']); ?></p>
+                                    <p>Course: <?php echo htmlspecialchars($row['course']); ?></p>
+                                    <p>Email: <?php echo htmlspecialchars($row['student_email']); ?></p>
+                                    <p>Salary Package: ₹<?php echo number_format($row['salary_package'], 2); ?></p>
+                                    <p>Placement Year: <?php echo htmlspecialchars($row['placement_year']); ?></p>
+                                </div>
+                            </div>
+                        <?php endwhile; ?>
+                    <?php else : ?>
+                        <p>No achievers found.</p>
+                    <?php endif; ?>
+                </div>
+                
+        </section>
+    </main>
+    <div class="founder-section">
+        <div class="founder-image">
+            <img src="Images/founder.png" alt="Founder Chancellor">
+        </div>
+        <div class="founder-message">
+            <h2 id="from-founder">From the Founder</h2>
+            <p>
+                Academic excellence beyond boundaries, that’s what makes MM(DU) the educational institution for the World.
+                In fact, MM(DU) is more than just being a University, it’s the engaging, intellectually vibrant place where growth-minded people share the platform as well as the passion to enrich human lives with their knowledge and benefit from a unique, progressive and world-class education.
+            </p>
+            <p class="founder-signature">
+                <span class="founder-name">Sh. Tarsem Garg</span><br>
+                Founder Chancellor
+            </p>
+        </div>
+    </div>
+    
+    <footer>
+       
+       <div class="footer-container2">
+           <div class="contact-info">
+               <h2>Connect</h2>
+               <p>Maharishi Markandeshwar (DEEMED TO BE UNIVERSITY)<br>
+               Mullana, Ambala (Haryana) +91-1731-274475, 76, 77, 78 | Toll Free: 1800 2740 240<br>
+               <a href="mailto:info@mmumullana.org">info@mmumullana.org</a></p>
+               <div class="social-icons">
+                   <a href="https://www.facebook.com/MMDUMullana/"><img src="Images/facebook.png" alt="Facebook"></a>
+                   <a href="https://www.instagram.com/mmdumullana/"><img src="Images/insta.png" alt="Instagram"></a>
+                   <a href="https://www.linkedin.com/school/maharishi-markandeshwar-university-mullana"><img src="Images/likedin.png" alt="LinkedIn"></a>
+                   <a href="https://www.youtube.com/MaharishiMarkandeshwarUniversityMullana"><img src="Images/youtube.png" alt="YouTube"></a>
+                   <a href="https://api.whatsapp.com/send?phone=8059930001"><img src="Images/whatsapp.png" alt="WhatsApp"></a>
+               </div>
+           </div>
+
+       </div>
+       <div class="footer-bottom">
+           <p>© Copyright <strong>MMDU</strong>. All Rights Reserved</p>
+           <p>Designed by <strong>Harsheekesh Tiwari</strong></p>
+       </div>
+   </footer>
+
+    <?php $conn->close(); ?>
+</body>
+</html>
